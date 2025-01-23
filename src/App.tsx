@@ -58,42 +58,60 @@ const optionsGroup3 = [
     description: 'Будьте в курсе всех изменений в вашем портфеле и рекомендациях',
   },
 ];
+
+const MIN_OPTIONS_GROUP1 = 3;
+const MIN_OPTIONS_GROUP2 = 1;
+const MIN_OPTIONS_GROUP3 = 2;
+
 export const App = () => {
   const [loading, setLoading] = useState(false);
+  const [err, setError] = useState(false);
+  const [err2, setError2] = useState(false);
+  const [err3, setError3] = useState(false);
   const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
   const [options, setOptions] = useState<string[]>([]);
   const [options2, setOptions2] = useState<string[]>([]);
   const [options3, setOptions3] = useState<string[]>([]);
 
   const toggleOption1 = (option: string) => {
-    setOptions(prev => {
-      if (prev.includes(option)) {
-        return prev.filter(item => item !== option);
-      }
+    const newOptions = options.includes(option) ? options.filter(item => item !== option) : [...options, option];
 
-      return [...prev, option];
-    });
+    setOptions(newOptions);
+    if (newOptions.length < MIN_OPTIONS_GROUP1) {
+      setError(true);
+    } else {
+      setError(false);
+    }
   };
   const toggleOption2 = (option: string) => {
-    setOptions2(prev => {
-      if (prev.includes(option)) {
-        return prev.filter(item => item !== option);
-      }
+    const newOptions = options2.includes(option) ? options2.filter(item => item !== option) : [...options2, option];
 
-      return [...prev, option];
-    });
+    setOptions2(newOptions);
+    if (newOptions.length < MIN_OPTIONS_GROUP2) {
+      setError2(true);
+    } else {
+      setError2(false);
+    }
   };
   const toggleOption3 = (option: string) => {
-    setOptions3(prev => {
-      if (prev.includes(option)) {
-        return prev.filter(item => item !== option);
-      }
+    const newOptions = options3.includes(option) ? options3.filter(item => item !== option) : [...options3, option];
 
-      return [...prev, option];
-    });
+    setOptions3(newOptions);
+    if (newOptions.length < MIN_OPTIONS_GROUP3) {
+      setError3(true);
+    } else {
+      setError3(false);
+    }
   };
 
   const submit = () => {
+    if (
+      options.length < MIN_OPTIONS_GROUP1 ||
+      options2.length < MIN_OPTIONS_GROUP2 ||
+      options3.length < MIN_OPTIONS_GROUP3
+    ) {
+      return;
+    }
     setLoading(true);
 
     // sendDataToGA({
@@ -141,17 +159,27 @@ export const App = () => {
         <Typography.TitleResponsive style={{ marginTop: '8px' }} tag="h2" view="small" font="system" weight="semibold">
           Торговля с AI-помощником
         </Typography.TitleResponsive>
-        <Typography.Text view="primary-small" color="secondary">
+        <Typography.Text view="primary-small" color={err ? 'accent' : 'secondary'}>
           Выбрано {options.length} из 3
         </Typography.Text>
 
         {optionsGroup1.map(({ title, description }) => (
-          <div key={title} className={appSt.box} onClick={() => toggleOption1(title)}>
+          <div
+            key={title}
+            className={appSt.box}
+            onClick={
+              !options.includes(title) && options.length === MIN_OPTIONS_GROUP1 ? undefined : () => toggleOption1(title)
+            }
+          >
             <div className={appSt.row}>
               <Typography.Text tag="p" defaultMargins={false} view="primary-small" weight="bold">
                 {title}
               </Typography.Text>
-              <Checkbox size={24} checked={options.includes(title)} />
+              <Checkbox
+                size={24}
+                checked={options.includes(title)}
+                disabled={!options.includes(title) && options.length === MIN_OPTIONS_GROUP1}
+              />
             </div>
             <Typography.Text view="primary-small" color="secondary">
               {description}
@@ -162,17 +190,27 @@ export const App = () => {
         <Typography.TitleResponsive style={{ marginTop: '8px' }} tag="h2" view="small" font="system" weight="semibold">
           Финансы
         </Typography.TitleResponsive>
-        <Typography.Text view="primary-small" color="secondary">
+        <Typography.Text view="primary-small" color={err2 ? 'accent' : 'secondary'}>
           Выбрано {options2.length} из 1
         </Typography.Text>
 
         {optionsGroup2.map(({ title, description }) => (
-          <div key={title} className={appSt.box} onClick={() => toggleOption2(title)}>
+          <div
+            key={title}
+            className={appSt.box}
+            onClick={
+              !options2.includes(title) && options2.length === MIN_OPTIONS_GROUP2 ? undefined : () => toggleOption2(title)
+            }
+          >
             <div className={appSt.row}>
               <Typography.Text tag="p" defaultMargins={false} view="primary-small" weight="bold">
                 {title}
               </Typography.Text>
-              <Checkbox size={24} checked={options2.includes(title)} />
+              <Checkbox
+                size={24}
+                checked={options2.includes(title)}
+                disabled={!options2.includes(title) && options2.length === MIN_OPTIONS_GROUP2}
+              />
             </div>
             <Typography.Text view="primary-small" color="secondary">
               {description}
@@ -183,17 +221,27 @@ export const App = () => {
         <Typography.TitleResponsive style={{ marginTop: '8px' }} tag="h2" view="small" font="system" weight="semibold">
           Инсайты
         </Typography.TitleResponsive>
-        <Typography.Text view="primary-small" color="secondary">
+        <Typography.Text view="primary-small" color={err3 ? 'accent' : 'secondary'}>
           Выбрано {options3.length} из 2
         </Typography.Text>
 
         {optionsGroup3.map(({ title, description }) => (
-          <div key={title} className={appSt.box} onClick={() => toggleOption3(title)}>
+          <div
+            key={title}
+            className={appSt.box}
+            onClick={
+              !options3.includes(title) && options3.length === MIN_OPTIONS_GROUP3 ? undefined : () => toggleOption3(title)
+            }
+          >
             <div className={appSt.row}>
               <Typography.Text tag="p" defaultMargins={false} view="primary-small" weight="bold">
                 {title}
               </Typography.Text>
-              <Checkbox size={24} checked={options3.includes(title)} />
+              <Checkbox
+                size={24}
+                checked={options3.includes(title)}
+                disabled={!options3.includes(title) && options3.length === MIN_OPTIONS_GROUP3}
+              />
             </div>
             <Typography.Text view="primary-small" color="secondary">
               {description}
