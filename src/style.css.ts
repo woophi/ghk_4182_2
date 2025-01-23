@@ -46,10 +46,15 @@ const containerBox = style({
 
 const box = style({
   padding: '12px 16px',
-  display: 'flex',
-  gap: '12px',
   borderRadius: '16px',
   backgroundColor: '#F2F3F5',
+});
+
+const row = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '12px',
 });
 
 export const appSt = {
@@ -59,4 +64,5 @@ export const appSt = {
   cornerImg,
   containerBox,
   box,
+  row,
 };
