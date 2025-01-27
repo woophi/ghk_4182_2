@@ -1,4 +1,5 @@
 import { ButtonMobile } from '@alfalab/core-components/button/mobile';
+import { CDNIcon } from '@alfalab/core-components/cdn-icon';
 import { Checkbox } from '@alfalab/core-components/checkbox';
 import { Gap } from '@alfalab/core-components/gap';
 import { Typography } from '@alfalab/core-components/typography';
@@ -158,6 +159,7 @@ export const App = () => {
           </div>
 
           <div className={appSt.tag}>
+            <CDNIcon className={appSt.calendar} name="glyph_calendar_m" />
             <Typography.Text view="primary-small" weight="bold">
               30 дней
             </Typography.Text>

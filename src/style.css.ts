@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 const bottomBtn = style({
   position: 'fixed',
@@ -57,6 +57,12 @@ const row = style({
   gap: '12px',
 });
 
+const calendar = style({});
+globalStyle(`${calendar} > svg`, {
+  width: '16px',
+  height: '16px',
+});
+
 export const appSt = {
   bottomBtn,
   container,
@@ -65,4 +71,5 @@ export const appSt = {
   containerBox,
   box,
   row,
+  calendar,
 };
