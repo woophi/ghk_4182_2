@@ -4,7 +4,6 @@ import { Gap } from '@alfalab/core-components/gap';
 import { Typography } from '@alfalab/core-components/typography';
 import { useEffect, useState } from 'react';
 import corner from './assets/corner.png';
-import wand from './assets/wand.svg';
 import { LS, LSKeys } from './ls';
 import { appSt } from './style.css';
 import { ThxLayout } from './thx/ThxLayout';
@@ -155,13 +154,12 @@ export const App = () => {
             PRO инвестиции
           </Typography.TitleResponsive>
           <div style={{ marginTop: '8px', maxWidth: '222px' }}>
-            <Typography.Text view="primary-small">Подписка, которая экономит ваши деньги и время</Typography.Text>
+            <Typography.Text view="primary-small">Выберите, что будет полезно именно вам</Typography.Text>
           </div>
 
           <div className={appSt.tag}>
-            <img width={16} height={16} src={wand} />
             <Typography.Text view="primary-small" weight="bold">
-              AI рекомендации
+              30 дней
             </Typography.Text>
           </div>
 
