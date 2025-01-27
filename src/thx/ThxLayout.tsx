@@ -19,10 +19,10 @@ export const ThxLayout = () => {
       <div className={thxSt.container}>
         <img src={sparkles} width={80} height={80} className={thxSt.rocket} />
         <Typography.TitleResponsive font="system" tag="h1" view="small" style={{ margin: '24px 0 12px' }} weight="bold">
-          Подписка работает в тестовом режиме
+          Подписка находится в режиме тестирования
         </Typography.TitleResponsive>
         <Typography.Text tag="p" view="primary-medium" defaultMargins={false}>
-          Следите за обновлениями, чтобы узнать, когда она станет полностью доступна
+          Следите за новостями, чтобы узнать, когда она станет доступной
         </Typography.Text>
       </div>
       <Gap size={96} />
