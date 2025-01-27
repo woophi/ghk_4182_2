@@ -2,12 +2,13 @@ import { ButtonMobile } from '@alfalab/core-components/button/mobile';
 import { Checkbox } from '@alfalab/core-components/checkbox';
 import { Gap } from '@alfalab/core-components/gap';
 import { Typography } from '@alfalab/core-components/typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import corner from './assets/corner.png';
 import wand from './assets/wand.svg';
 import { LS, LSKeys } from './ls';
 import { appSt } from './style.css';
 import { ThxLayout } from './thx/ThxLayout';
+import { sendDataToGA } from './utils/events';
 
 const optionsGroup1 = [
   {
@@ -105,6 +106,15 @@ export const App = () => {
   };
 
   const submit = () => {
+    if (options.length < MIN_OPTIONS_GROUP1) {
+      setError(true);
+    }
+    if (options2.length < MIN_OPTIONS_GROUP2) {
+      setError2(true);
+    }
+    if (options3.length < MIN_OPTIONS_GROUP3) {
+      setError3(true);
+    }
     if (
       options.length < MIN_OPTIONS_GROUP1 ||
       options2.length < MIN_OPTIONS_GROUP2 ||
@@ -112,23 +122,26 @@ export const App = () => {
     ) {
       return;
     }
+    window.gtag('event', 'test_cons_4182');
     setLoading(true);
 
-    // sendDataToGA({
-    //   autopayments: Number(checked) as 1 | 0,
-    //   limit: Number(checked2) as 1 | 0,
-    //   limit_sum: limit ?? 0,
-    //   insurance: Number(checked3) as 1 | 0,
-    //   email: email ? 1 : 0,
-    // }).then(() => {
-    //   LS.setItem(LSKeys.ShowThx, true);
-    //   setThx(true);
-    //   setLoading(false);
-    // });
-    // LS.setItem(LSKeys.ShowThx, true);
-    setThx(true);
-    setLoading(false);
+    sendDataToGA({
+      id: LS.getItem(LSKeys.UserId, null) ?? 0,
+      trade: JSON.stringify(options.map(o => optionsGroup1.indexOf(optionsGroup1.find(({ title }) => title === o)!) + 1)),
+      finance: JSON.stringify(options2.map(o => optionsGroup2.indexOf(optionsGroup2.find(({ title }) => title === o)!) + 1)),
+      insight: JSON.stringify(options3.map(o => optionsGroup3.indexOf(optionsGroup3.find(({ title }) => title === o)!) + 1)),
+    }).then(() => {
+      LS.setItem(LSKeys.ShowThx, true);
+      setThx(true);
+      setLoading(false);
+    });
   };
+
+  useEffect(() => {
+    if (!LS.getItem(LSKeys.UserId, null)) {
+      LS.setItem(LSKeys.UserId, Date.now());
+    }
+  }, []);
 
   if (thxShow) {
     return <ThxLayout />;
