@@ -75,6 +75,7 @@ export const App = () => {
 
   const toggleOption1 = (option: string) => {
     const newOptions = options.includes(option) ? options.filter(item => item !== option) : [...options, option];
+    console.debug(newOptions);
 
     setOptions(newOptions);
     if (newOptions.length < MIN_OPTIONS_GROUP1) {
@@ -179,9 +180,15 @@ export const App = () => {
           <div
             key={title}
             className={appSt.box}
-            onClick={
-              !options.includes(title) && options.length === MIN_OPTIONS_GROUP1 ? undefined : () => toggleOption1(title)
-            }
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!options.includes(title) && options.length === MIN_OPTIONS_GROUP1) {
+                return;
+              } else {
+                toggleOption1(title);
+              }
+            }}
           >
             <div className={appSt.row}>
               <Typography.Text tag="p" defaultMargins={false} view="primary-small" weight="bold">
@@ -210,9 +217,15 @@ export const App = () => {
           <div
             key={title}
             className={appSt.box}
-            onClick={
-              !options2.includes(title) && options2.length === MIN_OPTIONS_GROUP2 ? undefined : () => toggleOption2(title)
-            }
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!options2.includes(title) && options2.length === MIN_OPTIONS_GROUP2) {
+                return;
+              } else {
+                toggleOption2(title);
+              }
+            }}
           >
             <div className={appSt.row}>
               <Typography.Text tag="p" defaultMargins={false} view="primary-small" weight="bold">
@@ -241,9 +254,15 @@ export const App = () => {
           <div
             key={title}
             className={appSt.box}
-            onClick={
-              !options3.includes(title) && options3.length === MIN_OPTIONS_GROUP3 ? undefined : () => toggleOption3(title)
-            }
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!options3.includes(title) && options3.length === MIN_OPTIONS_GROUP3) {
+                return;
+              } else {
+                toggleOption3(title);
+              }
+            }}
           >
             <div className={appSt.row}>
               <Typography.Text tag="p" defaultMargins={false} view="primary-small" weight="bold">
